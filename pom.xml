@@ -12,7 +12,7 @@
 	<artifactId>carnauai</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>carnauai</name>
-	<description>App para monitoramento e acompanhamento dos blocos de carnaval de mG</description>
+	<description>App para monitoramento e acompanhamento dos blocos de carnaval de MG</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -70,8 +70,12 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.5.0</version>
+		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
