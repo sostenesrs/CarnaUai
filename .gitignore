@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+.postman/config.json
+postman/globals/workspace.postman_globals.json
