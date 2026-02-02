@@ -42,6 +42,47 @@ O CarnaUai ajuda o usuário a:
 
 ---
 
+## 🏗️ Arquitetura (Modular Monolith)
+
+O backend está organizado em **módulos por bounded context**, prontos para evoluir para microsserviços no futuro:
+
+```
+com.br.carnauai
+├── CarnauaiApplication.java
+├── shared/                          # Código compartilhado entre módulos
+│   ├── config/security/             # Configurações globais (ex: Security)
+│   ├── kernel/usuario/              # Entidade Usuario (referenciada por vários módulos)
+│   └── util/location/              # Utilitários (Location, LocationService)
+└── modules/
+    ├── agenda/                      # Módulo Agenda do usuário
+    │   ├── domain/                  # Entidades (Agenda)
+    │   ├── application/             # Casos de uso (AgendaService)
+    │   ├── infrastructure/         # Persistência (AgendaRepositoryJpa)
+    │   └── api/                     # REST (AgendaController)
+    ├── bloco/                       # Módulo Catálogo de Blocos
+    │   ├── domain/                  # Bloco, BlocoDia, Bairro
+    │   ├── application/
+    │   ├── infrastructure/
+    │   └── api/
+    ├── favorito/                    # Módulo Favoritos
+    │   ├── domain/
+    │   ├── application/
+    │   ├── infrastructure/
+    │   └── api/
+    └── notificacao/                 # Módulo Notificações
+        ├── domain/
+        └── infrastructure/
+```
+
+**Dependências entre módulos (para futura extração):**
+- **agenda** → shared (Usuario), modules.bloco (BlocoDia)
+- **favorito** → shared (Usuario), modules.bloco (Bloco)
+- **notificacao** → shared (Usuario)
+
+Cada módulo pode ser extraído como microsserviço: basta criar um novo projeto Maven, copiar o pacote do módulo e trocar referências diretas por chamadas HTTP ou eventos.
+
+---
+
 ## 🧠 Stack Tecnológica
 
 ### 🔧 Backend
