@@ -1,6 +1,6 @@
 package com.br.carnauai.modules.agenda.domain;
 
-import com.br.carnauai.modules.bloco.domain.BlocoDia;
+import com.br.carnauai.modules.bloco.domain.Bloco;
 import com.br.carnauai.shared.kernel.usuario.Usuario;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "agenda", uniqueConstraints = @UniqueConstraint(columnNames = {"usuario_id", "bloco_dia_id"}))
+@Table(name = "agenda", uniqueConstraints = @UniqueConstraint(columnNames = {"usuario_id", "bloco_id"}))
 public class Agenda {
 
     @Id
@@ -25,8 +25,8 @@ public class Agenda {
     private Usuario usuario;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "bloco_dia_id", nullable = false)
-    private BlocoDia blocoDia;
+    @JoinColumn(name = "bloco_id", nullable = false)
+    private Bloco bloco;
 
     @CreationTimestamp
     @Column(name = "dth_criacao", nullable = false, updatable = false)
@@ -35,10 +35,10 @@ public class Agenda {
     public Agenda() {
     }
 
-    public Agenda(UUID id, Usuario usuario, BlocoDia blocoDia) {
+    public Agenda(UUID id, Usuario usuario, Bloco bloco) {
         this.id = id;
         this.usuario = usuario;
-        this.blocoDia = blocoDia;
+        this.bloco = bloco;
     }
 
     public UUID getId() {
@@ -57,12 +57,12 @@ public class Agenda {
         this.usuario = usuario;
     }
 
-    public BlocoDia getBlocoDia() {
-        return blocoDia;
+    public Bloco getBloco() {
+        return bloco;
     }
 
-    public void setBlocoDia(BlocoDia blocoDia) {
-        this.blocoDia = blocoDia;
+    public void setBloco(Bloco bloco) {
+        this.bloco = bloco;
     }
 
     public LocalDateTime getDthCriacao() {

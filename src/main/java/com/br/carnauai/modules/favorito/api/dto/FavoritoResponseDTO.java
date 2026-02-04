@@ -6,6 +6,7 @@ import java.util.UUID;
 public record FavoritoResponseDTO(
         UUID usuarioId,
         UUID blocoId,
+        Boolean favoritado,
         LocalDateTime dthCriacao
 ) {
 }

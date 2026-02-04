@@ -39,9 +39,4 @@ public class AgendaController {
         return ResponseEntity.ok(list);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        agendaService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 }

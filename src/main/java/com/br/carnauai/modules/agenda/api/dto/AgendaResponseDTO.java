@@ -6,7 +6,7 @@ import java.util.UUID;
 public record AgendaResponseDTO(
         UUID id,
         UUID usuarioId,
-        UUID blocoDiaId,
+        UUID blocoId,
         LocalDateTime dthCriacao
 ) {
 }

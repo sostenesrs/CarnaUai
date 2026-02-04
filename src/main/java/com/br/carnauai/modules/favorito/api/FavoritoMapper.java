@@ -14,6 +14,7 @@ public class FavoritoMapper {
         return new FavoritoResponseDTO(
                 id != null ? id.getUsuarioId() : null,
                 id != null ? id.getBlocoId() : null,
+                favorito.getFavoritado(),
                 favorito.getDthCriacao()
         );
     }

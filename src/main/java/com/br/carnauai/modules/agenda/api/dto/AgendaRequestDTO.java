@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public record AgendaRequestDTO(
         @NotNull UUID usuarioId,
-        @NotNull UUID blocoDiaId
+        @NotNull UUID blocoId
 ) {
 }

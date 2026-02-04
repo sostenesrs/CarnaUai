@@ -1,6 +1,5 @@
 package com.br.carnauai.modules.favorito.api;
 
-import com.br.carnauai.modules.favorito.api.dto.FavoritoDeleteDTO;
 import com.br.carnauai.modules.favorito.api.dto.FavoritoRequestDTO;
 import com.br.carnauai.modules.favorito.api.dto.FavoritoResponseDTO;
 import com.br.carnauai.modules.favorito.application.FavoritoService;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/favoritos")
+@RequestMapping("/api/usuarios/{usuarioId}/favoritos")
 public class FavoritoController {
 
     private final FavoritoService favoritoService;
@@ -26,23 +25,22 @@ public class FavoritoController {
     }
 
     @PostMapping
-    public ResponseEntity<FavoritoResponseDTO> create(@Valid @RequestBody FavoritoRequestDTO dto) {
-        Favorito created = favoritoService.save(dto);
-        return ResponseEntity.created(URI.create("/api/favoritos?usuarioId=" + created.getId().getUsuarioId() + "&blocoId=" + created.getId().getBlocoId()))
-                .body(favoritoMapper.toResponseDTO(created));
+    public ResponseEntity<FavoritoResponseDTO> create(@PathVariable UUID usuarioId, @Valid @RequestBody FavoritoRequestDTO dto) {
+        Favorito favorito = favoritoService.save(new FavoritoRequestDTO(usuarioId, dto.blocoId()));
+
+        return ResponseEntity.created(URI.create("/api/usuarios/" + usuarioId + "/favoritos/" + dto.blocoId())).body(favoritoMapper.toResponseDTO(favorito));
     }
 
-    @GetMapping("/usuario/{usuarioId}")
+    @GetMapping
     public ResponseEntity<List<FavoritoResponseDTO>> listByUsuario(@PathVariable UUID usuarioId) {
-        List<FavoritoResponseDTO> list = favoritoService.listByUsuario(usuarioId).stream()
-                .map(favoritoMapper::toResponseDTO)
-                .toList();
+        List<FavoritoResponseDTO> list = favoritoService.listByUsuario(usuarioId).stream().map(favoritoMapper::toResponseDTO).toList();
+
         return ResponseEntity.ok(list);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> delete(@Valid @RequestBody FavoritoDeleteDTO dto) {
-        favoritoService.delete(dto.usuarioId(), dto.blocoId());
+    @DeleteMapping("/{blocoId}")
+    public ResponseEntity<Void> delete(@PathVariable UUID usuarioId, @PathVariable UUID blocoId) {
+        favoritoService.delete(usuarioId, blocoId);
         return ResponseEntity.noContent().build();
     }
 }

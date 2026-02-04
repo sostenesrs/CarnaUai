@@ -3,6 +3,7 @@ package com.br.carnauai.modules.favorito.domain;
 import com.br.carnauai.modules.bloco.domain.Bloco;
 import com.br.carnauai.shared.kernel.usuario.Usuario;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -24,10 +25,17 @@ public class Favorito {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "bloco_id", nullable = false)
     private Bloco bloco;
+    
+    @Column(name = "favoritado", nullable = false)
+    private Boolean favoritado = true;
 
     @CreationTimestamp
     @Column(name = "dth_criacao", nullable = false, updatable = false)
     private LocalDateTime dthCriacao;
+
+    @UpdateTimestamp
+    @Column(name = "dth_atualizacao", nullable = false)
+    private LocalDateTime dthAtualizacao;
 
     public Favorito() {
     }
@@ -64,6 +72,36 @@ public class Favorito {
 
     public LocalDateTime getDthCriacao() {
         return dthCriacao;
+    }
+
+    public LocalDateTime getDthAtualizacao() {
+        return dthAtualizacao;
+    }
+
+    public Boolean getFavoritado() {
+        return favoritado;
+    }
+
+    public void setFavoritado(Boolean favoritado) {
+        this.favoritado = favoritado;
+        // update timestamp in memory as a hint; the @UpdateTimestamp will normally handle it on flush
+        this.dthAtualizacao = LocalDateTime.now();
+    }
+
+    public void setDthCriacao(LocalDateTime dthCriacao) {
+        this.dthCriacao = dthCriacao;
+    }
+
+    public void setDthAtualizacao(LocalDateTime dthAtualizacao) {
+        this.dthAtualizacao = dthAtualizacao;
+    }
+
+    /**
+     * Mark this favorito as not favorited without deleting the row.
+     */
+    public void unfavoritar() {
+        this.favoritado = false;
+        this.dthAtualizacao = LocalDateTime.now();
     }
 
     @Override

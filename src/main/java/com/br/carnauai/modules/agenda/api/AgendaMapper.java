@@ -13,7 +13,7 @@ public class AgendaMapper {
         return new AgendaResponseDTO(
                 agenda.getId(),
                 agenda.getUsuario() != null ? agenda.getUsuario().getId() : null,
-                agenda.getBlocoDia() != null ? agenda.getBlocoDia().getId() : null,
+                agenda.getBloco() != null ? agenda.getBloco().getId() : null,
                 agenda.getDthCriacao()
         );
     }
