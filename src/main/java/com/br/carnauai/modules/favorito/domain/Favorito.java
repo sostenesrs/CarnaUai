@@ -99,7 +99,7 @@ public class Favorito {
     /**
      * Mark this favorito as not favorited without deleting the row.
      */
-    public void unfavoritar() {
+    public void desfavoritar() {
         this.favoritado = false;
         this.dthAtualizacao = LocalDateTime.now();
     }

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public record FavoritoRequestDTO(
         @NotNull UUID usuarioId,
-        @NotNull UUID blocoId
+        @NotNull UUID blocoId,
+        Boolean favoritado
 ) {
 }

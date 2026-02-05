@@ -40,20 +40,8 @@ public class BlocoController {
             @RequestParam(value = "data", required = false)
             @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate data
     ) {
-        List<Bloco> blocos;
 
-        if (data != null) {
-
-            blocos = blocoService.findByData(data);
-
-        } else if (bairroId != null) {
-
-            blocos = blocoService.findByBairroId(bairroId);
-
-        } else {
-
-            blocos = blocoService.findAll();
-        }
+        List<Bloco> blocos = blocoService.findWithFilters(data, bairroId);
 
         return ResponseEntity.ok(blocos.stream().map(blocoMapper::toResponseDTO).toList());
     }

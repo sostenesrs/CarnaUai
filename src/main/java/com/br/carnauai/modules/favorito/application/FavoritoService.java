@@ -44,7 +44,7 @@ public class FavoritoService {
             if (Boolean.TRUE.equals(fav.getFavoritado())) {
                 throw new DuplicateFavoriteException("Bloco já favoritado por este usuário");
             } else {
-                // Reactivate favorite
+
                 fav.setFavoritado(true);
                 return favoritoRepository.save(fav);
             }
@@ -57,8 +57,8 @@ public class FavoritoService {
     public void delete(UUID usuarioId, UUID blocoId) {
         FavoritoId id = new FavoritoId(usuarioId, blocoId);
         Favorito favorito = favoritoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Favorito não encontrado"));
-        // soft-unfavorite: mark as not favorited and update timestamp, keep row in DB
-        favorito.unfavoritar();
+
+        favorito.desfavoritar();
         favoritoRepository.save(favorito);
     }
 

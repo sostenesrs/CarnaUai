@@ -26,7 +26,7 @@ public class FavoritoController {
 
     @PostMapping
     public ResponseEntity<FavoritoResponseDTO> create(@PathVariable UUID usuarioId, @Valid @RequestBody FavoritoRequestDTO dto) {
-        Favorito favorito = favoritoService.save(new FavoritoRequestDTO(usuarioId, dto.blocoId()));
+        Favorito favorito = favoritoService.save(new FavoritoRequestDTO(usuarioId, dto.blocoId(), true));
 
         return ResponseEntity.created(URI.create("/api/usuarios/" + usuarioId + "/favoritos/" + dto.blocoId())).body(favoritoMapper.toResponseDTO(favorito));
     }
