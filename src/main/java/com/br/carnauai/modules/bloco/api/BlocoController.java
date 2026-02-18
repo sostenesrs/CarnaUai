@@ -35,14 +35,12 @@ public class BlocoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BlocoResponseDTO>> getAll(
-            @RequestParam(value = "bairroId", required = false) UUID bairroId,
-            @RequestParam(value = "data", required = false)
-            @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate data
+    public ResponseEntity<List<BlocoResponseDTO>> listar(
+            @RequestParam(value = "data", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
+            @RequestParam(value = "bairro", required = false) String bairro,
+            @RequestParam(value = "nome", required = false) String nome
     ) {
-
-        List<Bloco> blocos = blocoService.findWithFilters(data, bairroId);
-
+        List<Bloco> blocos = blocoService.findWithFilters(data, bairro, nome);
         return ResponseEntity.ok(blocos.stream().map(blocoMapper::toResponseDTO).toList());
     }
 

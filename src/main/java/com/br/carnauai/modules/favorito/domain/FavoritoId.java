@@ -1,13 +1,18 @@
 package com.br.carnauai.modules.favorito.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 @Embeddable
 public class FavoritoId implements Serializable {
+
+    @Column(name = "usuario_id", nullable = false)
     private UUID usuarioId;
+
+    @Column(name = "bloco_id", nullable = false)
     private UUID blocoId;
 
     public FavoritoId() {
@@ -37,13 +42,13 @@ public class FavoritoId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof FavoritoId)) return false;
         FavoritoId that = (FavoritoId) o;
-        return usuarioId.equals(that.usuarioId) && blocoId.equals(that.blocoId);
+        return Objects.equals(usuarioId, that.usuarioId) && Objects.equals(blocoId, that.blocoId);
     }
 
     @Override
     public int hashCode() {
-        return usuarioId.hashCode() ^ blocoId.hashCode();
+        return Objects.hash(usuarioId, blocoId);
     }
 }

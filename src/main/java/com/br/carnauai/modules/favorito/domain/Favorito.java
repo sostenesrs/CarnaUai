@@ -30,11 +30,11 @@ public class Favorito {
     private Boolean favoritado = true;
 
     @CreationTimestamp
-    @Column(name = "dth_criacao", nullable = false, updatable = false)
+    @Column(name = "dt_criacao", nullable = false, updatable = false)
     private LocalDateTime dthCriacao;
 
     @UpdateTimestamp
-    @Column(name = "dth_atualizacao", nullable = false)
+    @Column(name = "dt_alteracao", nullable = false)
     private LocalDateTime dthAtualizacao;
 
     public Favorito() {

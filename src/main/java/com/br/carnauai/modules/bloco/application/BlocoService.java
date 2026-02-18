@@ -100,24 +100,9 @@ public class BlocoService {
                 .orElse(List.of());
     }
 
-    public List<Bloco> findByBairroId(UUID bairroId) {
-        return blocoRepository.findByBairroId(bairroId);
-    }
-
-    public List<Bloco> findWithFilters(LocalDate data, UUID bairroId) {
-
-        if (data != null && bairroId != null) {
-            return blocoRepository.findByDataAndBairroId(data, bairroId);
-        }
-
-        if (data != null) {
-            return blocoRepository.findByData(data);
-        }
-
-        if (bairroId != null) {
-            return blocoRepository.findByBairroId(bairroId);
-        }
-
-        return blocoRepository.findAll();
+    public List<Bloco> findWithFilters(LocalDate data, String bairro, String nome) {
+        String bairroFiltro = (bairro != null && !bairro.isBlank()) ? bairro : null;
+        String nomeFiltro = (nome != null && !nome.isBlank()) ? nome : null;
+        return blocoRepository.findWithFilters(data, bairroFiltro, nomeFiltro);
     }
 }
