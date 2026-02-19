@@ -20,12 +20,12 @@ public interface BlocoRepositoryJpa extends JpaRepository<Bloco, UUID> {
     List<Bloco> findByOidAndDataGreaterThanEqualAndIdNot(String oid, LocalDate data, UUID id);
 
     @Query("""
-        select b from Bloco b
-        left join b.enderecoSaida es
-        left join b.enderecoDispersao ed
+        select distinct b from Bloco b
+        left join fetch b.enderecoSaida es
+        left join fetch b.enderecoDispersao ed
         where (:data is null or b.data = :data)
-          and (:bairro is null or lower(es.bairro) = lower(:bairro) or lower(ed.bairro) = lower(:bairro))
-          and (:nome is null or lower(b.nome) like lower(concat('%', :nome, '%')))
+          and (:bairro is null or lower(es.bairro) = lower(cast(:bairro as string)) or lower(ed.bairro) = lower(cast(:bairro as string)))
+          and (:nome is null or lower(b.nome) like lower(concat('%', cast(:nome as string), '%')))
         """)
     List<Bloco> findWithFilters(@Param("data") LocalDate data, @Param("bairro") String bairro, @Param("nome") String nome);
 }

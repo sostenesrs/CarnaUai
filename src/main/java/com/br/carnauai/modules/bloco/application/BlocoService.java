@@ -12,6 +12,7 @@ import com.br.carnauai.modules.bloco.infrastructure.PerfilPublicoRepositoryJpa;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
